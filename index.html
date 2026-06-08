@@ -2,771 +2,445 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>🍽️ 食迹 · 舌尖上的旅程</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小狐慢慢瘦 🦊</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
 
-:root {
-  --cream: #faf6f0;
-  --paper: #f0ebe3;
-  --ink: #2c2420;
-  --ink-light: #6b5f55;
-  --gold: #c9a96e;
-  --gold-light: #e8d5a8;
-  --wine: #8b3a3a;
-  --sage: #7a8b6e;
-  --border: #ddd6cc;
-}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-body {
-  font-family: 'Noto Sans SC', -apple-system, sans-serif;
-  background: var(--cream);
-  color: var(--ink);
-  min-height: 100vh;
-}
+  body {
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    background: #faf8f5;
+    color: #3d3d3d;
+    line-height: 1.8;
+    min-height: 100vh;
+  }
 
-/* 装饰纹理背景 */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-image: 
-    radial-gradient(circle at 20% 50%, rgba(201,169,110,0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(138,59,58,0.02) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: 0;
-}
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #faf8f5; }
+  ::-webkit-scrollbar-thumb { background: #d4c9c0; border-radius: 3px; }
 
-.container {
-  position: relative;
-  z-index: 1;
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 0 20px 120px;
-}
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #f7f0eb 0%, #efe6de 100%);
+    padding: 60px 20px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '🦊';
+    position: absolute;
+    font-size: 80px;
+    opacity: 0.08;
+    top: -10px;
+    right: 20px;
+    transform: rotate(15deg);
+  }
+  .hero h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 4px;
+    color: #5a4a3a;
+  }
+  .hero p {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: #8a7a6a;
+    letter-spacing: 2px;
+  }
 
-/* Header */
-.header {
-  padding: 40px 0 24px;
-  text-align: center;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 20px;
-}
-.header-icon { font-size: 48px; display: block; margin-bottom: 6px; }
-.header h1 {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 26px;
-  font-weight: 600;
-  color: var(--ink);
-  letter-spacing: 6px;
-}
-.header .sub {
-  font-size: 12px;
-  color: var(--ink-light);
-  margin-top: 6px;
-  letter-spacing: 3px;
-}
-.header .greeting {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 14px;
-  color: var(--ink-light);
-  margin-top: 14px;
-  line-height: 1.7;
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  /* Container */
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 30px 20px;
+  }
 
-/* Tabs */
-.tabs {
-  display: flex;
-  gap: 2px;
-  margin-bottom: 16px;
-  background: var(--paper);
-  border-radius: 12px;
-  padding: 3px;
-}
-.tab-btn {
-  flex: 1;
-  padding: 10px 4px;
-  border: none;
-  border-radius: 9px;
-  background: transparent;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--ink-light);
-  cursor: pointer;
-  transition: 0.3s;
-  letter-spacing: 0.5px;
-}
-.tab-btn.active {
-  background: white;
-  color: var(--ink);
-  box-shadow: 0 2px 8px rgba(44,36,32,0.06);
-}
-.tab-content { display: none; }
-.tab-content.active { display: block; }
+  /* Card */
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+    border: 1px solid #f0ebe6;
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
 
-/* Card */
-.card {
-  background: white;
-  border-radius: 16px;
-  padding: 24px;
-  margin-bottom: 14px;
-  box-shadow: 0 2px 16px rgba(44,36,32,0.04);
-  border: 1px solid rgba(221,214,204,0.3);
-}
-.card-title {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 16px;
-  letter-spacing: 1px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+  .card-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #5a4a3a;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title span { font-size: 1.2rem; }
 
-/* 添加按钮 */
-.add-btn {
-  width: 100%;
-  padding: 12px;
-  border: 1.5px dashed var(--border);
-  border-radius: 12px;
-  background: transparent;
-  color: var(--ink-light);
-  font-size: 13px;
-  cursor: pointer;
-  transition: 0.2s;
-  margin-bottom: 12px;
-  font-family: inherit;
-}
-.add-btn:hover {
-  border-color: var(--gold);
-  color: var(--gold);
-}
+  /* Profile */
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .profile-item {
+    background: #faf8f5;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .profile-item .label {
+    font-size: 0.75rem;
+    color: #a09080;
+    letter-spacing: 1px;
+  }
+  .profile-item .value {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #5a4a3a;
+    margin-top: 4px;
+  }
+  .profile-item .unit {
+    font-size: 0.8rem;
+    color: #8a7a6a;
+  }
+  .profile-item.highlight .value { color: #b8856c; }
 
-/* ===== 食旅记 ===== */
-.entry-card {
-  background: var(--cream);
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 10px;
-  border-left: 3px solid var(--gold-light);
-  transition: 0.2s;
-}
-.entry-card:hover { border-left-color: var(--gold); }
-.entry-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-.entry-restaurant {
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--ink);
-}
-.entry-city {
-  font-size: 11px;
-  color: var(--ink-light);
-  margin-top: 2px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.entry-tag {
-  display: inline-block;
-  font-size: 10px;
-  padding: 2px 8px;
-  border-radius: 10px;
-  margin-top: 6px;
-  margin-right: 4px;
-}
-.tag-dining { background: var(--wine); color: white; }
-.tag-business { background: var(--gold); color: white; }
-.tag-explore { background: var(--sage); color: white; }
-.tag-normal { background: var(--paper); color: var(--ink-light); }
-.entry-dish {
-  font-size: 13px;
-  color: var(--ink);
-  margin-top: 8px;
-  line-height: 1.6;
-}
-.entry-delete {
-  color: #ccc;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 0 4px;
-}
-.entry-delete:hover { color: var(--wine); }
+  /* Progress Bar */
+  .progress-section { margin-top: 20px; }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #8a7a6a;
+    margin-bottom: 8px;
+  }
+  .progress-track {
+    height: 10px;
+    background: #f0ebe6;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 50%;
+    background: linear-gradient(90deg, #d4b8a4, #c4a088);
+    border-radius: 5px;
+    transition: width 1s ease;
+    position: relative;
+  }
+  .progress-fill::after {
+    content: '🦊';
+    position: absolute;
+    right: -14px;
+    top: -7px;
+    font-size: 14px;
+  }
+  .progress-goal {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #a09080;
+    margin-top: 6px;
+  }
 
-.empty-state {
-  text-align: center;
-  color: var(--ink-light);
-  padding: 40px 0;
-  font-size: 14px;
-  line-height: 1.8;
-}
-.empty-state .icon { font-size: 40px; display: block; margin-bottom: 12px; }
+  /* Meal Log */
+  .meal-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px dashed #f0ebe6;
+  }
+  .meal-item:last-child { border-bottom: none; }
+  .meal-time {
+    font-size: 0.75rem;
+    color: #a09080;
+    min-width: 40px;
+    padding-top: 2px;
+  }
+  .meal-content { flex: 1; }
+  .meal-content .name {
+    font-size: 0.9rem;
+    color: #5a4a3a;
+  }
+  .meal-content .cal {
+    font-size: 0.8rem;
+    color: #a09080;
+  }
+  .meal-total {
+    text-align: right;
+    padding-top: 12px;
+    border-top: 1px solid #f0ebe6;
+    margin-top: 4px;
+  }
+  .meal-total .total-label {
+    font-size: 0.8rem;
+    color: #a09080;
+  }
+  .meal-total .total-num {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #5a4a3a;
+  }
 
-/* ===== 足迹 ===== */
-.footprint-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 12px;
-}
-.footprint-item {
-  background: var(--cream);
-  border-radius: 10px;
-  padding: 16px 8px;
-  text-align: center;
-  cursor: pointer;
-  transition: 0.2s;
-  border: 1px solid transparent;
-}
-.footprint-item:hover { border-color: var(--gold-light); }
-.footprint-item .city { font-size: 13px; font-weight: 500; color: var(--ink); }
-.footprint-item .count { font-size: 10px; color: var(--ink-light); margin-top: 2px; }
-.footprint-item.new {
-  border: 1.5px dashed var(--border);
-  background: transparent;
-  color: var(--ink-light);
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  /* Workout */
+  .workout-list { list-style: none; }
+  .workout-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px dashed #f0ebe6;
+    font-size: 0.9rem;
+    color: #5a4a3a;
+  }
+  .workout-list li:last-child { border-bottom: none; }
+  .workout-dot {
+    width: 6px; height: 6px;
+    background: #d4b8a4;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .workout-tag {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: #b8856c;
+    background: #f7f0eb;
+    padding: 2px 10px;
+    border-radius: 10px;
+  }
 
-/* ===== 拾趣 ===== */
-.interest-card {
-  background: var(--cream);
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 10px;
-  border-bottom: 2px solid var(--gold-light);
-}
-.interest-card .title-area {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-.interest-card .interest-title {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--ink);
-}
-.interest-card .interest-date {
-  font-size: 11px;
-  color: var(--ink-light);
-  margin-top: 2px;
-}
-.interest-card .interest-note {
-  font-size: 13px;
-  color: var(--ink-light);
-  margin-top: 8px;
-  line-height: 1.6;
-}
-.interest-delete {
-  color: #ccc;
-  cursor: pointer;
-  font-size: 14px;
-  padding: 0 4px;
-}
-.interest-delete:hover { color: var(--wine); }
+  /* Quote */
+  .quote-box {
+    text-align: center;
+    padding: 20px 0 10px;
+  }
+  .quote-box .quote {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 0.95rem;
+    color: #8a7a6a;
+    font-style: italic;
+    letter-spacing: 1px;
+    line-height: 1.8;
+  }
+  .quote-box .author {
+    font-size: 0.75rem;
+    color: #b8a898;
+    margin-top: 8px;
+  }
 
-/* 统计数据 */
-.stats-row {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 14px;
-}
-.stat-box {
-  flex: 1;
-  background: var(--cream);
-  border-radius: 10px;
-  padding: 14px;
-  text-align: center;
-}
-.stat-box .num {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--wine);
-}
-.stat-box .label {
-  font-size: 11px;
-  color: var(--ink-light);
-  margin-top: 2px;
-}
+  /* Mood */
+  .mood-box {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    padding: 10px 0;
+  }
+  .mood-btn {
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: transform 0.2s, background 0.2s;
+    opacity: 0.4;
+  }
+  .mood-btn:hover { transform: scale(1.2); opacity: 0.7; }
+  .mood-btn.active { opacity: 1; transform: scale(1.15); }
 
-/* ===== Modal ===== */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(44,36,32,0.3);
-  backdrop-filter: blur(4px);
-  z-index: 100;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-.modal-overlay.show { display: flex; }
-.modal {
-  background: white;
-  border-radius: 20px;
-  padding: 28px;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-}
-.modal h3 {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 16px;
-  text-align: center;
-}
-.modal input, .modal textarea, .modal select {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  font-size: 14px;
-  font-family: inherit;
-  margin-bottom: 10px;
-  outline: none;
-  transition: 0.2s;
-  background: var(--cream);
-  color: var(--ink);
-}
-.modal input:focus, .modal textarea:focus, .modal select:focus {
-  border-color: var(--gold);
-}
-.modal textarea { height: 80px; resize: none; }
-.modal-btns {
-  display: flex;
-  gap: 10px;
-  margin-top: 4px;
-}
-.modal-btns button {
-  flex: 1;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: 0.2s;
-  font-family: inherit;
-}
-.btn-primary {
-  background: var(--ink);
-  color: white;
-}
-.btn-primary:hover { opacity: 0.9; }
-.btn-cancel {
-  background: var(--paper);
-  color: var(--ink-light);
-}
-.btn-cancel:hover { background: #e0d8ce; }
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 30px 20px 40px;
+    font-size: 0.75rem;
+    color: #c0b0a0;
+    letter-spacing: 1px;
+  }
 
-/* 设置页面 */
-.settings-row {
-  margin-bottom: 12px;
-}
-.settings-row label {
-  display: block;
-  font-size: 13px;
-  color: var(--ink-light);
-  margin-bottom: 6px;
-}
+  /* Responsive */
+  @media (max-width: 400px) {
+    .hero h1 { font-size: 1.6rem; }
+    .profile-grid { gap: 8px; }
+    .profile-item { padding: 12px 8px; }
+    .profile-item .value { font-size: 1.3rem; }
+  }
 </style>
 </head>
 <body>
 
+<!-- Hero -->
+<div class="hero">
+  <h1>小狐慢慢瘦</h1>
+  <p>不急，不赶，刚刚好</p>
+</div>
+
+<!-- Main -->
 <div class="container">
-  <!-- Header -->
-  <div class="header">
-    <span class="header-icon">🍽️</span>
-    <h1>食迹</h1>
-    <div class="sub">舌尖上的旅程</div>
-    <div class="greeting" id="dailyGreeting">「美食是相逢最美好的理由。」</div>
-  </div>
 
-  <!-- Stats -->
-  <div class="stats-row">
-    <div class="stat-box"><div class="num" id="statMeals">0</div><div class="label">🍽️ 食记</div></div>
-    <div class="stat-box"><div class="num" id="statCities">0</div><div class="label">📍 城市</div></div>
-    <div class="stat-box"><div class="num" id="statInterests">0</div><div class="label">✨ 拾趣</div></div>
-  </div>
+  <!-- Profile Card -->
+  <div class="card">
+    <div class="card-title"><span>📏</span> 我的坐标</div>
+    <div class="profile-grid">
+      <div class="profile-item">
+        <div class="label">身高</div>
+        <div class="value">160</div>
+        <div class="unit">cm</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">当前</div>
+        <div class="value">56.5</div>
+        <div class="unit">kg</div>
+      </div>
+      <div class="profile-item highlight">
+        <div class="label">目标</div>
+        <div class="value">52.5</div>
+        <div class="unit">kg</div>
+      </div>
+      <div class="profile-item highlight">
+        <div class="label">差额</div>
+        <div class="value">4</div>
+        <div class="unit">kg</div>
+      </div>
+    </div>
 
-  <!-- Tabs -->
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('meals')">🍽️ 食旅记</button>
-    <button class="tab-btn" onclick="switchTab('footprints')">📍 足迹</button>
-    <button class="tab-btn" onclick="switchTab('interests')">✨ 拾趣</button>
-    <button class="tab-btn" onclick="switchTab('settings')">⚙️</button>
-  </div>
-
-  <!-- Tab: 食旅记 -->
-  <div class="tab-content active" id="tab-meals">
-    <div class="card">
-      <div class="card-title">🍽️ 食旅记</div>
-      <button class="add-btn" onclick="showMealModal()">＋ 记下一顿饭</button>
-      <div id="mealList"></div>
-      <div id="emptyMeals" class="empty-state">
-        <span class="icon">🍜</span>
-        还没有记录<br>点击上方，记下与美食的每次相遇
+    <!-- Progress -->
+    <div class="progress-section">
+      <div class="progress-label">
+        <span>已走</span>
+        <span>50%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width: 50%"></div>
+      </div>
+      <div class="progress-goal">
+        <span>113 斤</span>
+        <span>🏁 105 斤</span>
       </div>
     </div>
   </div>
 
-  <!-- Tab: 足迹 -->
-  <div class="tab-content" id="tab-footprints">
-    <div class="card">
-      <div class="card-title">📍 去过的地方</div>
-      <div class="footprint-grid" id="footprintGrid"></div>
-      <div id="emptyFootprints" class="empty-state">
-        <span class="icon">🗺️</span>
-        还没有收集城市<br>记录食记时会自动添加
+  <!-- Today's Meals -->
+  <div class="card">
+    <div class="card-title"><span>🥣</span> 今日进食</div>
+    <div class="meal-item">
+      <div class="meal-time">早</div>
+      <div class="meal-content">
+        <div class="name">芝士鸡肉帕尼尼 · 美式</div>
+        <div class="cal">≈ 300 kcal</div>
       </div>
     </div>
-  </div>
-
-  <!-- Tab: 拾趣 -->
-  <div class="tab-content" id="tab-interests">
-    <div class="card">
-      <div class="card-title">✨ 拾趣</div>
-      <button class="add-btn" onclick="showInterestModal()">＋ 记下一件趣事</button>
-      <div id="interestList"></div>
-      <div id="emptyInterests" class="empty-state">
-        <span class="icon">🎭</span>
-        记录那些有趣的小事<br>一本书、一场戏、一个新发现
+    <div class="meal-item">
+      <div class="meal-time">加</div>
+      <div class="meal-content">
+        <div class="name">山楂棒 · 小饼干</div>
+        <div class="cal">≈ 200 kcal</div>
       </div>
     </div>
-  </div>
-
-  <!-- Tab: 设置 -->
-  <div class="tab-content" id="tab-settings">
-    <div class="card">
-      <div class="card-title">⚙️ 数据管理</div>
-      <p style="font-size:13px;color:var(--ink-light);margin-bottom:16px;line-height:1.7;">
-        导出备份以防丢失，换手机或清缓存后可以导入恢复。
-      </p>
-      <button class="add-btn" onclick="exportData()">📥 导出备份</button>
-      <div style="margin-top:8px;">
-        <label class="add-btn" style="display:block;text-align:center;cursor:pointer;">📤 导入备份
-          <input type="file" id="importInput" accept=".json" style="display:none" onchange="importData(event)">
-        </label>
+    <div class="meal-item">
+      <div class="meal-time">晚</div>
+      <div class="meal-content">
+        <div class="name" style="color: #b8856c;">✨ 待决定</div>
+        <div class="cal">麻辣烫在招手</div>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- Modal: 食旅记 -->
-<div class="modal-overlay" id="mealModal">
-  <div class="modal">
-    <h3>🍽️ 记下一顿饭</h3>
-    <input type="text" id="mealRestaurant" placeholder="餐厅/地方">
-    <input type="text" id="mealCity" placeholder="城市">
-    <input type="date" id="mealDate">
-    <select id="mealTag">
-      <option value="dining">🍷 美食探店</option>
-      <option value="business">🤝 商务宴请</option>
-      <option value="explore">🌍 旅途觅食</option>
-      <option value="normal">🍜 日常小酌</option>
-    </select>
-    <textarea id="mealDish" placeholder="吃了什么？有什么想记的……"></textarea>
-    <div class="modal-btns">
-      <button class="btn-cancel" onclick="hideModal('mealModal')">取消</button>
-      <button class="btn-primary" onclick="saveMeal()">保存</button>
+    <div class="meal-total">
+      <span class="total-label">今日总计</span>
+      <span class="total-num">≈ 500</span>
+      <span class="total-label" style="margin-left:4px;">kcal</span>
     </div>
   </div>
-</div>
 
-<!-- Modal: 拾趣 -->
-<div class="modal-overlay" id="interestModal">
-  <div class="modal">
-    <h3>✨ 记下一件趣事</h3>
-    <input type="text" id="interestTitle" placeholder="是什么？（书名、活动、发现……）">
-    <input type="date" id="interestDate">
-    <textarea id="interestNote" placeholder="想说的……"></textarea>
-    <div class="modal-btns">
-      <button class="btn-cancel" onclick="hideModal('interestModal')">取消</button>
-      <button class="btn-primary" onclick="saveInterest()">保存</button>
+  <!-- Workout Plan -->
+  <div class="card">
+    <div class="card-title"><span>💪</span> 训练日</div>
+    <ul class="workout-list">
+      <li>
+        <span class="workout-dot"></span>
+        臀推 / 深蹲 / 髋外展
+        <span class="workout-tag">🍑 练臀</span>
+      </li>
+      <li>
+        <span class="workout-dot"></span>
+        高位下拉 / 划船 / 引体辅助
+        <span class="workout-tag">🔙 练背</span>
+      </li>
+      <li>
+        <span class="workout-dot"></span>
+        爬坡 30min · 坡度10 · 速度5
+        <span class="workout-tag">🏃 有氧</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Habits -->
+  <div class="card">
+    <div class="card-title"><span>🌱</span> 小习惯</div>
+    <ul class="workout-list">
+      <li>
+        <span class="workout-dot" style="background: #b8a898;"></span>
+        每天喝够 2L 水 💧
+      </li>
+      <li>
+        <span class="workout-dot" style="background: #b8a898;"></span>
+        睡够 7 小时 🌙
+      </li>
+      <li>
+        <span class="workout-dot" style="background: #b8a898;"></span>
+        不吃夜宵，不饿着自己 🤝
+      </li>
+    </ul>
+  </div>
+
+  <!-- Quote -->
+  <div class="quote-box">
+    <div class="quote">
+      「慢慢来，比较快。」
     </div>
+    <div class="author">— 给慢慢变好的自己</div>
+  </div>
+
+  <!-- Mood -->
+  <div class="card">
+    <div class="card-title"><span>💭</span> 今天心情</div>
+    <div class="mood-box">
+      <button class="mood-btn">😊</button>
+      <button class="mood-btn">😐</button>
+      <button class="mood-btn">😔</button>
+      <button class="mood-btn">😤</button>
+      <button class="mood-btn">🦊</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    小狐慢慢瘦 · 陪你慢慢来 🦊
   </div>
 </div>
 
 <script>
-// ===== 祝福语 =====
-const greetings = [
-  '「美食是相逢最美好的理由。」',
-  '「味道是记忆的锚——吃过的好饭，都成了故事。」',
-  '「走再远的路，最后还是会被一碗热汤收买。」',
-  '「应酬是工作，美食是生活——别让它们混为一谈。」',
-  '「世界那么大，先去吃吃看。」',
-  '「每一座城市都有自己的味道，你尝过多少？」',
-  '「商务桌上谈的是生意，美食桌上聊的是人生。」',
-  '「人生的趣味，藏在一餐一饭、一书一景里。」',
-];
-
-const mealTags = {
-  dining: { label: '🍷 美食探店', class: 'tag-dining' },
-  business: { label: '🤝 商务宴请', class: 'tag-business' },
-  explore: { label: '🌍 旅途觅食', class: 'tag-explore' },
-  normal: { label: '🍜 日常小酌', class: 'tag-normal' },
-};
-
-// ===== 状态 =====
-let meals = [];
-let interests = [];
-
-// ===== 初始化 =====
-function init() {
-  loadData();
-  renderMeals();
-  renderFootprints();
-  renderInterests();
-  updateStats();
-  setGreeting();
-}
-
-function setGreeting() {
-  const g = greetings[Math.floor(Math.random() * greetings.length)];
-  document.getElementById('dailyGreeting').textContent = g;
-}
-
-// ===== 数据 =====
-function loadData() {
-  meals = JSON.parse(localStorage.getItem('feast_meals') || '[]');
-  interests = JSON.parse(localStorage.getItem('feast_interests') || '[]');
-}
-
-function saveData() {
-  localStorage.setItem('feast_meals', JSON.stringify(meals));
-  localStorage.setItem('feast_interests', JSON.stringify(interests));
-}
-
-function updateStats() {
-  document.getElementById('statMeals').textContent = meals.length;
-  const cities = new Set(meals.map(m => m.city).filter(Boolean));
-  document.getElementById('statCities').textContent = cities.size;
-  document.getElementById('statInterests').textContent = interests.length;
-}
-
-// ===== 食旅记 =====
-function renderMeals() {
-  const list = document.getElementById('mealList');
-  const empty = document.getElementById('emptyMeals');
-  list.innerHTML = '';
-  
-  if (meals.length === 0) {
-    empty.style.display = 'block';
-    return;
-  }
-  empty.style.display = 'none';
-  
-  meals.sort((a, b) => new Date(b.date) - new Date(a.date));
-  
-  meals.forEach((m, i) => {
-    const tag = mealTags[m.tag] || mealTags.normal;
-    const dateStr = m.date ? new Date(m.date).toLocaleDateString('zh-CN') : '';
-    const div = document.createElement('div');
-    div.className = 'entry-card';
-    div.innerHTML = `
-      <div class="entry-header">
-        <div>
-          <div class="entry-restaurant">${m.restaurant}</div>
-          <div class="entry-city">📍 ${m.city || '未标记'} · ${dateStr}</div>
-          <span class="entry-tag ${tag.class}">${tag.label}</span>
-        </div>
-        <span class="entry-delete" onclick="deleteMeal(${i})">✕</span>
-      </div>
-      ${m.dish ? `<div class="entry-dish">${m.dish}</div>` : ''}
-    `;
-    list.appendChild(div);
+  // Mood selector
+  document.querySelectorAll('.mood-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
   });
-}
 
-function showMealModal() {
-  document.getElementById('mealDate').value = new Date().toISOString().split('T')[0];
-  document.getElementById('mealModal').classList.add('show');
-}
-
-function saveMeal() {
-  const restaurant = document.getElementById('mealRestaurant').value.trim();
-  const city = document.getElementById('mealCity').value.trim();
-  const date = document.getElementById('mealDate').value;
-  const tag = document.getElementById('mealTag').value;
-  const dish = document.getElementById('mealDish').value.trim();
-  
-  if (!restaurant) { alert('写下餐厅名字吧'); return; }
-  
-  meals.push({ restaurant, city, date, tag, dish });
-  saveData();
-  renderMeals();
-  renderFootprints();
-  updateStats();
-  hideModal('mealModal');
-  
-  document.getElementById('mealRestaurant').value = '';
-  document.getElementById('mealCity').value = '';
-  document.getElementById('mealDish').value = '';
-}
-
-function deleteMeal(i) {
-  const sorted = [...meals].sort((a, b) => new Date(b.date) - new Date(a.date));
-  const m = sorted[i];
-  const idx = meals.indexOf(m);
-  if (idx > -1) { meals.splice(idx, 1); saveData(); renderMeals(); renderFootprints(); updateStats(); }
-}
-
-// ===== 足迹 =====
-function renderFootprints() {
-  const grid = document.getElementById('footprintGrid');
-  const empty = document.getElementById('emptyFootprints');
-  grid.innerHTML = '';
-  
-  const cityCount = {};
-  meals.forEach(m => {
-    if (m.city) {
-      cityCount[m.city] = (cityCount[m.city] || 0) + 1;
-    }
-  });
-  
-  const cities = Object.keys(cityCount);
-  if (cities.length === 0) {
-    empty.style.display = 'block';
-    return;
-  }
-  empty.style.display = 'none';
-  
-  cities.sort().forEach(city => {
-    const div = document.createElement('div');
-    div.className = 'footprint-item';
-    div.innerHTML = `<div class="city">📍 ${city}</div><div class="count">${cityCount[city]} 次</div>`;
-    grid.appendChild(div);
-  });
-}
-
-// ===== 拾趣 =====
-function renderInterests() {
-  const list = document.getElementById('interestList');
-  const empty = document.getElementById('emptyInterests');
-  list.innerHTML = '';
-  
-  if (interests.length === 0) {
-    empty.style.display = 'block';
-    return;
-  }
-  empty.style.display = 'none';
-  
-  interests.sort((a, b) => new Date(b.date) - new Date(a.date));
-  
-  interests.forEach((item, i) => {
-    const dateStr = item.date ? new Date(item.date).toLocaleDateString('zh-CN') : '';
-    const div = document.createElement('div');
-    div.className = 'interest-card';
-    div.innerHTML = `
-      <div class="title-area">
-        <div>
-          <div class="interest-title">✨ ${item.title}</div>
-          <div class="interest-date">${dateStr}</div>
-        </div>
-        <span class="interest-delete" onclick="deleteInterest(${i})">✕</span>
-      </div>
-      ${item.note ? `<div class="interest-note">${item.note}</div>` : ''}
-    `;
-    list.appendChild(div);
-  });
-}
-
-function showInterestModal() {
-  document.getElementById('interestDate').value = new Date().toISOString().split('T')[0];
-  document.getElementById('interestModal').classList.add('show');
-}
-
-function saveInterest() {
-  const title = document.getElementById('interestTitle').value.trim();
-  const date = document.getElementById('interestDate').value;
-  const note = document.getElementById('interestNote').value.trim();
-  
-  if (!title) { alert('写个标题吧'); return; }
-  
-  interests.push({ title, date, note });
-  saveData();
-  renderInterests();
-  updateStats();
-  hideModal('interestModal');
-  
-  document.getElementById('interestTitle').value = '';
-  document.getElementById('interestNote').value = '';
-}
-
-function deleteInterest(i) {
-  const sorted = [...interests].sort((a, b) => new Date(b.date) - new Date(a.date));
-  const item = sorted[i];
-  const idx = interests.indexOf(item);
-  if (idx > -1) { interests.splice(idx, 1); saveData(); renderInterests(); updateStats(); }
-}
-
-// ===== 导出/导入 =====
-function exportData() {
-  const data = { version: 1, exportedAt: new Date().toISOString(), meals, interests };
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = '食迹备份_' + new Date().toISOString().split('T')[0] + '.json';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-
-function importData(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const data = JSON.parse(e.target.result);
-      if (!data.meals || !data.interests) { alert('文件格式不对'); return; }
-      if (confirm('导入会替换当前数据，确定吗？')) {
-        meals = data.meals || [];
-        interests = data.interests || [];
-        saveData();
-        renderMeals();
-        renderFootprints();
-        renderInterests();
-        updateStats();
-        alert('✅ 导入成功！');
-      }
-    } catch(e) { alert('文件读取失败'); }
-  };
-  reader.readAsText(file);
-  event.target.value = '';
-}
-
-// ===== Modal / Tab =====
-function hideModal(id) { document.getElementById(id).classList.remove('show'); }
-
-function switchTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-  event.target.classList.add('active');
-}
-
-// 启动
-init();
+  // Animate progress on load
+  setTimeout(() => {
+    document.querySelector('.progress-fill').style.width = '50%';
+  }, 300);
 </script>
 </body>
 </html>
